@@ -24,4 +24,5 @@ public class ActivateSIMCard {
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
     }
+
 }
