@@ -36,10 +36,16 @@ public class SimCardActivatorStepDefinitions {
         simCard = new SimCard("8944500102198304826", "sam.grey@mail.com");
     }
 
+    @When("a request is not made")
+    public void aRequestIsNotMade() {
+        // This step does nothing intentionally
+    }
+
     @When("a request to activate the sim card is submitted")
     public void aRequestToActivateTheSimCardIsSubmitted() {
         var response = this.restTemplate.postForObject("http://localhost:8080/api/v1/activate", simCard, SimCard.class);
     }
+
 
     @Then("the sim card is activated and its state is recorded to the database")
     public void theSimCardIsActivatedAndItsStateIsRecordedToTheDatabase() {
@@ -47,11 +53,17 @@ public class SimCardActivatorStepDefinitions {
         assertTrue(response.getActive());
     }
 
-    @Then("the sim card fails to activate and an error message is return")
+    @Then("the sim card fails to activate and its state is recorded to the database")
     public void theSimCardFailsToActivateAndItsStateIsRecordedToTheDatabase() {
         Activation response = this.restTemplate.getForObject("http://localhost:8080/api/v1/query?simCardId={simCardId}", Activation.class, simCard.getIccid());
         assertFalse(response.getActive());
+    }
 
+    @Then("the sim card is not found and an error message is return")
+    public void simCardNotFoundAndErrorMessageIsReturned() {
+        String response = this.restTemplate.getForObject("http://localhost:8080/api/v1/query?simCardId={simCardId}", String.class, simCard.getIccid());
+        String expectedResponse = "{\"Message\":\"Sim card not found\"}";
+        assertEquals(expectedResponse, response);
     }
 
 
