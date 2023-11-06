@@ -1,6 +1,6 @@
 package au.com.telstra.simcardactivator.Controllers;
 
-import au.com.telstra.simcardactivator.DTOs.Requests.ActivateSIMCard;
+import au.com.telstra.simcardactivator.DTOs.Requests.SimCard;
 import au.com.telstra.simcardactivator.DTOs.Response.ActuationResult;
 import au.com.telstra.simcardactivator.Handlers.SimCardActuationHandler;
 import au.com.telstra.simcardactivator.Models.Activation;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1")
@@ -23,13 +22,13 @@ public class SIMController {
     }
 
     @PostMapping("/activate")
-    public ResponseEntity<Activation> activateSIMCard(@RequestBody ActivateSIMCard simCard){
+    public ResponseEntity<Activation> activateSIMCard(@RequestBody SimCard simCard){
         ActuationResult actuationResult = simCardActuationHandler.actuate(simCard);
         Activation entity = activationsRepository.save(new Activation(simCard.getIccid(),simCard.getCustomerEmail(), actuationResult.getStatus()));
         return ResponseEntity.ok(entity);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/query")
     public ResponseEntity<Object> activateSIMCard(@RequestParam String simCardId){
         Optional<Activation> activationEntity =  activationsRepository.findByIccid(simCardId);
 

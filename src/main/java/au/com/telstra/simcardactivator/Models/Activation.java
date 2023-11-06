@@ -38,11 +38,16 @@ public class Activation {
         this.customerEmail = customerEmail;
     }
 
-    public boolean isActive() {
+    public boolean getActive() {
         return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "SimCard {iccid=" + iccid + ", customerEmail=" + customerEmail + ", active=" + active + "}";
     }
 }

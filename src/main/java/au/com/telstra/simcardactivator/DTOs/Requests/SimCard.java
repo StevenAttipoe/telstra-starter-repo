@@ -1,10 +1,10 @@
 package au.com.telstra.simcardactivator.DTOs.Requests;
 
-public class ActivateSIMCard {
+public class SimCard {
     private String iccid;
     private String customerEmail;
 
-    public ActivateSIMCard(String iccid, String customerEmail) {
+    public SimCard(String iccid, String customerEmail) {
         this.iccid = iccid;
         this.customerEmail = customerEmail;
     }
@@ -25,4 +25,8 @@ public class ActivateSIMCard {
         this.customerEmail = customerEmail;
     }
 
+    @Override
+    public String toString() {
+        return "SimCard{" + "iccid='" + iccid + '\'' + ", customerEmail='" + customerEmail + '\'' + '}';
+    }
 }
